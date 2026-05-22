@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Service} from '../../../models/Service';
-import {ServiceApi} from '../service';
+import {ServiceApi} from '../../../service';
 import {NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
 

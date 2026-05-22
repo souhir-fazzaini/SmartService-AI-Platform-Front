@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import {ServiceApi} from '../../services/service';
+import {ServiceApi} from '../../../service';
 
 @Component({
   selector: 'app-login',
