@@ -1,0 +1,19 @@
+<h2>Services</h2>
+
+<div *ngFor="let s of services">
+
+  <div class="card">
+    <h3>{{s.name}}</h3>
+    <p>{{s.description}}</p>
+    <p>Category: {{s.category}}</p>
+    <p>Price: {{s.price}}</p>
+    <p>Rating: ⭐ {{s.rating}}</p>
+  </div>
+
+  <button (click)="delete(s.id)">Delete</button>
+
+  <button (click)="reserve(s)">
+    Reserve
+  </button>
+
+</div>

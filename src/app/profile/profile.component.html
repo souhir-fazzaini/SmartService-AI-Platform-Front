@@ -1,0 +1,41 @@
+<div class="profile-container">
+
+  <div class="profile-card">
+
+    <div class="profile-header">
+      <div class="avatar">
+        <img src="https://i.pravatar.cc/150?img=3" alt="User" />
+      </div>
+
+      <div class="profile-info">
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.email }}</p>
+        <span class="role">{{ user.role }}</span>
+      </div>
+    </div>
+
+    <div class="profile-body">
+      <div class="info-row">
+        <span>Phone</span>
+        <p>{{ user.phone }}</p>
+      </div>
+
+      <div class="info-row">
+        <span>Address</span>
+        <p>{{ user.address }}</p>
+      </div>
+
+      <div class="info-row">
+        <span>Joined</span>
+        <p>{{ user.createdAt }}</p>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button class="btn edit">Edit Profile</button>
+      <button class="btn logout">Logout</button>
+    </div>
+
+  </div>
+
+</div>

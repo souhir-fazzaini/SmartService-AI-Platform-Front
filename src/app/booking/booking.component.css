@@ -1,0 +1,53 @@
+.bookings {
+  padding: 60px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.booking-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 12px;
+}
+
+/* Status colors */
+.pending {
+  background: orange;
+}
+
+.confirmed {
+  background: green;
+}
+
+.cancelled {
+  background: red;
+}
+
+button {
+  padding: 6px 12px;
+  border: none;
+  background: #1e293b;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #334155;
+}

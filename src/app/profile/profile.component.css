@@ -1,0 +1,109 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+.profile-card {
+  width: 420px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  padding: 25px;
+}
+
+/* HEADER */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.avatar img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #1a2233;
+}
+
+.profile-info p {
+  margin: 2px 0;
+  font-size: 13px;
+  color: #7a8699;
+}
+
+.role {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 3px 10px;
+  font-size: 11px;
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 20px;
+}
+
+/* BODY */
+.profile-body {
+  margin-top: 15px;
+}
+
+.info-row {
+  margin-bottom: 12px;
+}
+
+.info-row span {
+  font-size: 12px;
+  color: #7a8699;
+}
+
+.info-row p {
+  margin: 2px 0 0;
+  font-size: 14px;
+  color: #1a2233;
+}
+
+/* ACTIONS */
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.btn.edit {
+  background: #1a5faa;
+  color: white;
+}
+
+.btn.edit:hover {
+  background: #154d8a;
+}
+
+.btn.logout {
+  background: #f1f5f9;
+  color: #e53935;
+}
+
+.btn.logout:hover {
+  background: #ffeaea;
+}
