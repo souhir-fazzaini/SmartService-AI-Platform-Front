@@ -1,47 +1,88 @@
 import { Component, OnInit } from '@angular/core';
 import {CommonModule, NgClass} from '@angular/common';
+import {ServiceApi} from '../../service';
+import {Router} from '@angular/router';
+import {Booking} from '../../models/Booking';
+import {Reviews} from '../../reviews';
 
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
-  imports: [
-    NgClass,
-    CommonModule
-  ],
+  imports: [CommonModule],
   styleUrls: ['./booking.component.css']
 })
 export class BookingComponent implements OnInit {
 
-  bookings: any[] = [];
+  bookings: Booking[] = [];
+  isLoading: boolean = false;
+  errorMessage: string = '';
+  services: any[] = [];
+  ratings: { [bookingId: number]: number } = {};
+  comments: { [bookingId: number]: string } = {};
+  reviewSent: { [bookingId: number]: boolean } = {};
+
+
+
+  constructor(private serviceApi: ServiceApi,private reviews: Reviews, private router: Router) {}
 
   ngOnInit(): void {
-    // Mock data (remplace par API Spring Boot après)
-    this.bookings = [
-      {
-        id: 1,
-        service: 'Web Development',
-        date: '2026-05-22',
-        status: 'Pending'
-      },
-      {
-        id: 2,
-        service: 'UI Design',
-        date: '2026-05-20',
-        status: 'Confirmed'
-      },
-      {
-        id: 3,
-        service: 'Mobile App',
-        date: '2026-05-18',
-        status: 'Cancelled'
-      }
-    ];
+    this.loadBookings();
   }
 
-  cancelBooking(id: number) {
-    const booking = this.bookings.find(b => b.id === id);
-    if (booking) {
-      booking.status = 'Cancelled';
-    }
+  loadBookings(): void {
+    this.isLoading = true;
+    this.serviceApi.getAllBookings().subscribe({
+      next: (data: Booking[]) => {
+        this.bookings = data;
+        console.log(this.bookings)
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMessage = 'Erreur lors du chargement des réservations.';
+        this.isLoading = false;
+        console.error(err);
+      }
+    });
   }
+
+  setRating(bookingId: number, star: number): void {
+    this.ratings[bookingId] = star;
+  }
+
+  getRating(bookingId: number): number {
+    return this.ratings[bookingId] || 0;
+  }
+
+  setComment(bookingId: number, event: any): void {
+    this.comments[bookingId] = event.target.value;
+  }
+
+  submitReview(bookingId: number, serviceId: number): void {
+
+    // 👇 récupérer userId directement depuis bookings
+    const booking = this.bookings.find(b => b.id === bookingId);
+    const userId = booking?.userId;
+
+    console.log('bookingId:', bookingId);
+    console.log('serviceId:', serviceId);
+    console.log('userId:', userId);
+
+    if (!this.ratings[bookingId]) {
+      alert('Veuillez sélectionner une note !');
+      return;
+    }
+
+    const review = {
+      rating: this.ratings[bookingId],
+      comment: this.comments[bookingId] || ''
+    };
+
+    this.reviews.submitReview(review, serviceId, userId!).subscribe({
+      next: () => {
+        this.reviewSent[bookingId] = true;
+      },
+      error: (err) => console.error('Erreur review', err)
+    });
+  }
+
 }

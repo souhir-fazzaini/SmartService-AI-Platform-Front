@@ -1,7 +1,12 @@
+.bookings {
+  padding: 60px;
+}
+
+
 h2 {
   font-size: 22px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: #1a2233;
 }
 
@@ -60,4 +65,23 @@ button {
 button:hover {
   background: #c62828;
   transform: scale(1.05);
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
 }

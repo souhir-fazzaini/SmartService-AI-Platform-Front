@@ -1,3 +1,5 @@
+<div class="bookings">
+
 <h2>Services</h2>
 
 <div *ngFor="let s of services">
@@ -12,8 +14,28 @@
 
   <button (click)="delete(s.id)">Delete</button>
 
-  <button (click)="reserve(s)">
+  <button (click)="openModal(s)">
     Reserve
   </button>
 
+</div>
+<div class="modal" *ngIf="showModal">
+
+  <div class="modal-content">
+
+    <h2>Reservation</h2>
+
+    <p>Service : {{selectedService?.name}}</p>
+
+    <button (click)="confirmReservation(selectedService)">
+      Confirm
+    </button>
+
+    <button (click)="closeModal()">
+      Close
+    </button>
+
+  </div>
+
+</div>
 </div>

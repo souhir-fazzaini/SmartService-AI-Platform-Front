@@ -1,22 +1,64 @@
 <div class="bookings">
+  <h2>Mes Réservations</h2>
 
-  <h2>My Bookings</h2>
+  <div *ngFor="let booking of bookings">
+    <div class="card">
 
-  <div class="booking-card" *ngFor="let b of bookings">
+      <h3>{{booking.service?.name}}</h3>
+      <p>📝 {{booking.service?.description}}</p>
+      <p>🏷️ Catégorie: {{booking.service?.category}}</p>
+      <p>💰 Prix: {{booking.service?.price | currency:'TND'}}</p>
 
-    <div class="info">
-      <h3>{{ b.service }}</h3>
-      <p>Date: {{ b.date }}</p>
+      <hr>
+
+      <p>📅 Date de réservation: {{booking.bookingDate | date:'dd/MM/yyyy'}}</p>
+      <p>📌 Statut:
+        <span [ngClass]="{
+          'text-success': booking.status === 'CONFIRMED',
+          'text-warning': booking.status === 'PENDING',
+          'text-danger': booking.status === 'CANCELLED'
+        }">
+          {{booking.status}}
+        </span>
+      </p>
+      <p>🕐 Réservé le: {{booking.createdAt | date:'dd/MM/yyyy HH:mm'}}</p>
+
+      <hr>
+
+      <!-- ⭐ REVIEWS — seulement si CONFIRMED -->
+      <div *ngIf="booking.status === 'CONFIRMED'">
+        <h4>⭐ Laisser un avis</h4>
+
+        <!-- Étoiles -->
+        <div class="stars">
+  <span
+    *ngFor="let star of [1,2,3,4,5]"
+    (click)="setRating(booking.id, star)"
+    [style.color]="getRating(booking.id) >= star ? '#FFD700' : '#ccc'"
+    [style.font-size]="'24px'"
+    [style.cursor]="'pointer'">
+    ★
+  </span>
+        </div>
+
+        <!-- Commentaire -->
+        <textarea
+          placeholder="Votre commentaire..."
+          (input)="setComment(booking.id, $event)">
+        </textarea>
+
+        <!-- Bouton envoyer -->
+        <button (click)="submitReview(booking.id, booking.service.id)">
+          Envoyer l'avis
+        </button>
+
+        <!-- Confirmation -->
+        <p *ngIf="reviewSent[booking.id]" class="text-success">
+          ✅ Avis envoyé avec succès !
+        </p>
+      </div>
+
     </div>
-
-    <div class="status" [ngClass]="b.status.toLowerCase()">
-      {{ b.status }}
-    </div>
-
-    <button (click)="cancelBooking(b.id)" *ngIf="b.status !== 'Cancelled'">
-      Cancel
-    </button>
-
   </div>
 
 </div>
