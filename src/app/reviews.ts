@@ -18,4 +18,12 @@ export class Reviews {
       review
     );
   }
+
+  getReviewSummary(serviceId: number): Observable<string> {
+    return this.http.get(
+      `${this.baseUrl}/${serviceId}/summary`, // 👈 supprimé /services en double
+      { responseType: 'text' }
+    );
+  }
+
 }

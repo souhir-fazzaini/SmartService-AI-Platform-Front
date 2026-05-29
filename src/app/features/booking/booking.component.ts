@@ -20,10 +20,12 @@ export class BookingComponent implements OnInit {
   ratings: { [bookingId: number]: number } = {};
   comments: { [bookingId: number]: string } = {};
   reviewSent: { [bookingId: number]: boolean } = {};
+  summaries: { [serviceId: number]: string } = {};
+  isLoadingSummary: { [serviceId: number]: boolean } = {};
 
 
-
-  constructor(private serviceApi: ServiceApi,private reviews: Reviews, private router: Router) {}
+  constructor(private serviceApi: ServiceApi, private reviews: Reviews, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.loadBookings();
@@ -85,4 +87,19 @@ export class BookingComponent implements OnInit {
     });
   }
 
+  loadSummary(serviceId: number): void {
+    if (!serviceId) return; // 👈 garde si undefined
+
+    this.isLoadingSummary[serviceId] = true;
+    this.reviews.getReviewSummary(serviceId).subscribe({
+      next: (data) => {
+        this.summaries[serviceId] = data;
+        this.isLoadingSummary[serviceId] = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.isLoadingSummary[serviceId!] = false;
+      }
+    });
+  }
 }

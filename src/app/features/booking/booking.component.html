@@ -1,9 +1,13 @@
 <div class="bookings">
   <h2>Mes Réservations</h2>
 
+  <p *ngIf="isLoading">⏳ Chargement...</p>
+  <p *ngIf="errorMessage" class="text-danger">{{errorMessage}}</p>
+
   <div *ngFor="let booking of bookings">
     <div class="card">
 
+      <!-- Infos Service -->
       <h3>{{booking.service?.name}}</h3>
       <p>📝 {{booking.service?.description}}</p>
       <p>🏷️ Catégorie: {{booking.service?.category}}</p>
@@ -11,6 +15,7 @@
 
       <hr>
 
+      <!-- Infos Booking -->
       <p>📅 Date de réservation: {{booking.bookingDate | date:'dd/MM/yyyy'}}</p>
       <p>📌 Statut:
         <span [ngClass]="{
@@ -25,20 +30,20 @@
 
       <hr>
 
-      <!-- ⭐ REVIEWS — seulement si CONFIRMED -->
+      <!-- ⭐ Review — seulement si CONFIRMED -->
       <div *ngIf="booking.status === 'CONFIRMED'">
         <h4>⭐ Laisser un avis</h4>
 
         <!-- Étoiles -->
         <div class="stars">
-  <span
-    *ngFor="let star of [1,2,3,4,5]"
-    (click)="setRating(booking.id, star)"
-    [style.color]="getRating(booking.id) >= star ? '#FFD700' : '#ccc'"
-    [style.font-size]="'24px'"
-    [style.cursor]="'pointer'">
-    ★
-  </span>
+          <span
+            *ngFor="let star of [1,2,3,4,5]"
+            (click)="setRating(booking.id, star)"
+            [style.color]="getRating(booking.id) >= star ? '#FFD700' : '#ccc'"
+            [style.font-size]="'24px'"
+            [style.cursor]="'pointer'">
+            ★
+          </span>
         </div>
 
         <!-- Commentaire -->
@@ -56,6 +61,28 @@
         <p *ngIf="reviewSent[booking.id]" class="text-success">
           ✅ Avis envoyé avec succès !
         </p>
+
+        <hr>
+
+        <!-- 🤖 Résumé IA -->
+        <div class="ai-summary">
+          <h4>🤖 Résumé des avis</h4>
+
+          <p *ngIf="summaries[booking.service.id]">
+            {{summaries[booking.service.id]}}
+          </p>
+
+          <p *ngIf="isLoadingSummary[booking.service.id]">
+            ⏳ Génération en cours...
+          </p>
+
+          <button
+            (click)="loadSummary(booking.service.id)"
+            [disabled]="isLoadingSummary[booking.service.id]">
+            ✨ Générer résumé IA
+          </button>
+        </div>
+
       </div>
 
     </div>
